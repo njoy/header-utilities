@@ -1,23 +1,31 @@
-########################################################################
-# Preamble
-########################################################################
+include( FetchContent )
 
-cmake_minimum_required( VERSION 3.16 )
-project( header-utilities LANGUAGES CXX )
 
 ########################################################################
-# Dependencies
+# Forward declarations
 ########################################################################
 
-include( cmake/header-utilities_dependencies.cmake )
 
 ########################################################################
-# Project targets
+# Declare project dependencies
 ########################################################################
 
-add_library( header-utilities INTERFACE )
-target_include_directories( header-utilities INTERFACE src/ )
-target_link_libraries( header-utilities
-    INTERFACE catch-adapter
-    INTERFACE Log
+FetchContent_Declare( catch-adapter
+    GIT_REPOSITORY  http://github.com/njoy/catch-adapter
+    GIT_TAG         origin/build/fetchcontent
+    )
+
+FetchContent_Declare( Log
+    GIT_REPOSITORY  http://github.com/njoy/Log
+    GIT_TAG         origin/build/fetchcontent
+    )
+
+
+########################################################################
+# Load dependencies
+########################################################################
+
+FetchContent_MakeAvailable(
+    catch-adapter
+    Log
     )
